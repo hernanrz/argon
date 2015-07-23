@@ -1,0 +1,111 @@
+*,*:focus {padding:0; margin:0; outline: none}
+
+body, html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-color:#eee;
+	background-image: radial-gradient(closest-side at center, #ddd, #fff);
+	background-size: cover;
+	background-attachment: fixed;
+	color: #333;
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14.5px;
+}
+
+.page-block {
+	min-width: 250px;
+	max-width: 60%;
+	margin: 0 auto;
+
+}
+
+.input {
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.5em;
+	width: 100%;
+	resize: vertical;
+	margin: 5px 0;
+}
+
+#title {
+	text-align: center;
+	font-size: 2em;
+	background: none;
+	border: none;
+	text-shadow: 1px 1px 0 #fff;
+}
+
+#title:hover:not(:focus) {
+	color: #1E90FF;
+}
+
+#text-area {
+	border-radius: 5px;
+	border: none;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 0 white, 0 2px 0 #ccc;
+	height: 3in;
+	box-sizing: border-box;
+}
+
+#bottom-actions {
+	margin: 15px auto;
+}
+
+#bottom-actions #save-btn {
+	float: right;
+}
+
+.flat-btn {
+	background-color: #1E90FF;
+	background-image: linear-gradient(180deg, #4DA7FF, #1E90FF);
+	color: white;
+	border: 1px solid #0B72D6;
+	border-radius: 3px;
+	padding: 8px 2px;
+	cursor: pointer;
+}
+
+.flat-btn:hover {
+	background-image: linear-gradient(180deg, #4698E8, #1E90FF);
+}
+
+.flat-btn:active {
+	box-shadow: inset 0 0 5px rgba(0,0,0,0.15);		
+}
+
+.flat-btn::-moz-focus-inner {
+	border: none;
+}
+
+#delete-link {
+	text-decoration: none;
+	color: #0B72D6;
+	display: inline-block;
+}
+
+#delete-link:hover {
+	text-decoration: underline;
+}
+
+#title.view {
+	margin: 15px 0;
+}
+
+#title.view:hover {
+	color: #333;
+}
+
+#text-content {
+	margin: 10px 0;
+	min-height: 70%;
+}
+
+#text-content > p {
+	line-height: 1.75em;
+}
