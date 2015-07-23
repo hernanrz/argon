@@ -19,5 +19,9 @@ if(isset($_GET["UID"]) && isset($_GET["key"])) {
 		<button class="flat-btn" id="save-btn">Guardar</button>
 	</div>
 	
-	<a id="delete-link" href="javascript:(void)">Eliminar</a>
+	<a id="delete-link" href="javascript:void(0)">Eliminar</a> | <a id="share-link" href="javascript:void(0)">Compartir</a>
+	
+	<div id="share-url">
+		<input type="text" id="share-url-val" class="input"/>
+	</div>
 </div>

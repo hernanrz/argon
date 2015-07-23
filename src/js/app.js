@@ -126,4 +126,22 @@ $(document).ready(function(){
 			});
 		}
 	});
+	
+	$("#share-link").on("click", function() {
+		if($("#share-url").toggle().is(":visible")) {
+			var current_location = location.href, url;
+			//Remove the "/" at the end of the url if it's there, since it messes up the rewrite rule
+			if(current_location.charAt(current_location.length - 1) === "/") {
+				current_location = current_location.substr(0, current_location.length - 1);
+			}
+			
+			url = current_location.substr(0, current_location.lastIndexOf("/"));
+			
+			$("#share-url-val").val(url).select();
+		}
+	});
+	
+	$("#share-url-val").on("click doubleclick mouseover", function() {
+		$("#share-url-val").focus().select();
+	});
 });
