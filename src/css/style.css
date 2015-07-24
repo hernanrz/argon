@@ -94,7 +94,7 @@ a:hover {
 }
 
 #title.view {
-	margin: 15px 0;
+	padding: 15px 0;
 }
 
 #title.view:hover {
@@ -139,4 +139,14 @@ a:hover {
 
 #action-links {
 	display: none;
+}
+.view #text-content {
+	text-align: center;
+}
+#text-content p {
+	text-align: justify;
+	font-size: 15px;
+	word-break: break-all;
+	display: inline-block;
+	margin: 0 auto;
 }
