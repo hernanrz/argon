@@ -18,7 +18,7 @@
 	
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
-		<title><?php print (isset($note) ? $note->title." | " : "") ?>Argón</title>
+		<title><?php print (isset($note) ? htmlentities($note->title)." | " : "") ?>Argón</title>
 	</head>
 	<body>
 		<?php
