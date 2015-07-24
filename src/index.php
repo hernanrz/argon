@@ -5,6 +5,7 @@
 <html>
 	<head>
 		<base href="//<?=AR_PATH?>" />
+		<link rel="shortcut icon" href="favicon.ico"> 
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/icons.css" rel="stylesheet" />
 	    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->

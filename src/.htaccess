@@ -1,4 +1,6 @@
 RewriteEngine On
 RewriteRule ^api/v1/(.+)$ api/api.php?path=$1 [QSA]
 RewriteRule ^n/(.+)/(.+)$ index.php?UID=$1&key=$2&edit=1
+RewriteRule ^n/(.+)/$ index.php?UID=$1&view=1
 RewriteRule ^n/(.+)$ index.php?UID=$1&view=1
+# For some reason, ^n/(.+)/?$ won't work...

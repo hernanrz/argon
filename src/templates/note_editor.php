@@ -18,8 +18,10 @@ if(isset($_GET["UID"]) && isset($_GET["key"])) {
 		<input type="checkbox" id="private-chk" checked="<?php isset($note) ? ($note->private ? "checked" : "") : "" ?>" name="private"><label for="private-chk"> Nota privada</label>
 		<button class="flat-btn" id="save-btn">Guardar</button>
 	</div>
-	
-	<a id="delete-link" href="javascript:void(0)">Eliminar</a> | <a id="share-link" href="javascript:void(0)">Compartir</a>
+	<div <?php if(isset($note)) { ?> style="display:block" <?php } ?> id="action-links">
+	<a id="delete-link" href="javascript:void(0)">Eliminar</a> 
+	| <a id="share-link" href="javascript:void(0)">Compartir</a>
+	</div>
 	
 	<div id="share-url">
 		<i class="icon link"></i>

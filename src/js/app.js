@@ -73,6 +73,11 @@ function saveNote() {
 		ajaxSettings.data = params;
 		
 		ajaxSettings.success = function (data) {
+			$("#save-btn").text("Guardar");
+			if(components.UID === '') {
+				$("#action-links").show();	
+			}
+			
 			/** Set the UID and Key the server returns */
 			components.UID = data.note.UID;
 			if(data.note.key) {
@@ -94,7 +99,7 @@ function saveNote() {
 			components.private = data.note.private;
 			document.title = data.note.title + " | Argón";
 		};
-		
+		$("#save-btn").text("Guardando...");
 		$.ajax(url, ajaxSettings);
 }
 

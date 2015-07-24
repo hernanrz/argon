@@ -136,3 +136,7 @@ a:hover {
 	display: block;
 	box-sizing: border-box;
 }
+
+#action-links {
+	display: none;
+}
