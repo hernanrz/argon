@@ -1,6 +1,9 @@
 <?php
-if(isset($_GET["UID"]) && isset($_GET["key"])) {
+if(!isset($note) && isset($_GET["UID"])) {
 	$note = new Note($pdo_link, $_GET["UID"]);
+}	
+
+if(isset($note) && isset($_GET["key"])) {
 	?>
 	<script>
 	components.UID = "<?php print $note->UID ?>";
