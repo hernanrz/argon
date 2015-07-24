@@ -22,6 +22,7 @@ if(isset($_GET["UID"]) && isset($_GET["key"])) {
 	<a id="delete-link" href="javascript:void(0)">Eliminar</a> | <a id="share-link" href="javascript:void(0)">Compartir</a>
 	
 	<div id="share-url">
+		<i class="icon link"></i>
 		<input type="text" id="share-url-val" class="input"/>
 	</div>
 </div>
