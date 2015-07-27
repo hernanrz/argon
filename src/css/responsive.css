@@ -1,0 +1,21 @@
+@media screen and (max-device-width:400px) {
+
+	body {
+		padding-left: 0;
+	}
+
+	#sidebar {
+		left: -150px;
+	}
+
+	#sidebar::before {
+		content:"";
+		display: block;
+		width: 32px;
+		height: 32px;
+		background: red;
+		position: relative;
+		right: -150px;
+		top: 18px;
+	}
+}
