@@ -6,14 +6,18 @@ body, html {
 }
 
 body {
-	background-color:#eee;
-	background-image: radial-gradient(closest-side at center, #ddd, #fff);
+	background-color: #fff;
 	background-size: cover;
 	background-attachment: fixed;
 	color: #333;
-	
+	padding-left: 150px;
+	box-sizing: border-box;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14.5px;
+}
+
+body.view {
+	padding-left: 0;
 }
 
 .page-block {
@@ -37,6 +41,7 @@ body {
 	background: none;
 	border: none;
 	text-shadow: 1px 1px 0 #fff;
+	resize: none;
 }
 
 #title:hover:not(:focus) {
@@ -140,13 +145,25 @@ a:hover {
 #action-links {
 	display: none;
 }
+
 .view #text-content {
 	text-align: center;
 }
+
 #text-content p {
 	text-align: justify;
 	font-size: 15px;
 	word-break: break-all;
 	display: inline-block;
 	margin: 0 auto;
+}
+
+#sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 150px;
+	background: #333;
+	border-right: 1px solid #777;
 }
