@@ -30,3 +30,9 @@
 	width: 33px;
 	height: 23px;
 }
+
+.icon.user {
+	background: no-repeat -36px -24px;
+	width: 32px;
+	height: 32px;
+}
