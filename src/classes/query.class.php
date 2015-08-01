@@ -56,7 +56,8 @@ class Query {
 		if ($result = $this->pdo_statement->fetch($style)) {
 			return $result;
 		}else {
-			return $this->errorInfo = $this->pdo_statement->errorInfo();
+			$this->errorInfo = $this->pdo_statement->errorInfo();
+			return $this->success = false;
 		}
 	}
 };

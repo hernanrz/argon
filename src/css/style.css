@@ -111,10 +111,6 @@ a:hover {
 	min-height: 70%;
 }
 
-#text-content > p {
-	line-height: 1.75em;
-}
-
 #share-url {
 	display: none;
 	width: 70%;
@@ -151,11 +147,13 @@ a:hover {
 }
 
 #text-content p {
+	line-height: 1.75em;
 	text-align: justify;
 	font-size: 15px;
-	word-break: break-all;
+	word-wrap: break-word;
 	display: inline-block;
 	margin: 0 auto;
+	width: 100%;
 }
 
 #sidebar {
