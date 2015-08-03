@@ -1,12 +1,22 @@
-# Argón - Note sharing web app #
+# What is this? #
+Argon is a note sharing web application, it includes a RESTful API 
 
-To set up argon you must import argon.sql in your database and change the settings in src/settings/database_sample.php and then rename that file to database.php
+# Installation #
+1. Run `php scripts/install_db.php` this will create a database.php file in the settings folder and then will create the tables in your database.
 
-Also you may have to change the AR_FOLDER constant in the settings.php file, depending on where your project is located. E.g., if argon is located in /var/www/argon, then you must set the AR_FOLDER constant
+2. In the settings folder, create a copy of the settings_sample.php file and rename it to settings.php
+	2.1 You may need to change the AR_FOLDER constant in this file: e.g., if the url looks like `http://localhost/argon/src` then set it to `argon/src/`
 
-### REST API ###
-Argon includes a json based restful api which isn't yet documented although the usage is explained inside the source code
+# Requirements #
+To run argon you need the following:
 
-### License ###
+* PHP 5.6+
+* Apache 2.4+
+* MySQL 5.x
 
-All the files in this repo, except for the jQuery library, are available under the GNU public license.
+# TODOS #
+
+The RESTful API is not documented yet, although you can take a look at the source code to see how it works
+
+# License #
+	See LICENSE for licensing info
