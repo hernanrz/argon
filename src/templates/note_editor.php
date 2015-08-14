@@ -13,6 +13,16 @@ if(isset($note) && isset($_GET["key"])) {
 }
 ?>
 <div id="sidebar">
+	<div id="logo" class="text-center">
+		<i class="icon argon"></i>
+	</div>
+	
+	<p>¿Tienes una cuenta?</p>
+	<input type="text" placeholder="Usuario" />
+	<input type="password" placeholder="Contraseña" />
+	<input type="checkbox" id="remember-box" checked="checked" /> <label for="remember-box"> Recordarme</label>
+	
+	<button class="btn f-right">Entrar</button>
 </div>
 <div class="page-block">
 	<input value="<?= (isset($note) ? $note->title : "") ?>" placeholder="Nueva Nota" type="text" id="title" class="input"/>

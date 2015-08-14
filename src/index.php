@@ -15,6 +15,7 @@
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/icons.css" rel="stylesheet" />
 		<link href="css/responsive.css" rel="stylesheet" />
+		<link href="css/utils.css" rel="stylesheet" />
 	    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/app.js" type="text/javascript"></script>
