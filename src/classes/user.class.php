@@ -14,7 +14,7 @@ class User {
 	/*
 	* sha1 hash of username:password
 	*/
-	public $auth_key;
+	public $auth_key = false;
 	
 	private $pdo;
 	private $query_handle;
@@ -69,7 +69,10 @@ class User {
 	*	Returns true if it finds a result, false if it does not
 	*/
 	public function auth() {
-		$this->gen_auth_key();
+		
+		if(!$this->auth_key) {
+			$this->gen_auth_key();			
+		}
 		
 		$query = "SELECT * FROM users WHERE username = ? AND auth_key = ?";
 		$params = [

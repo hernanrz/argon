@@ -9,7 +9,8 @@
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-include "../core.php";
+
+require "../core.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 $path = explode("/",$_GET["path"]);
@@ -17,7 +18,8 @@ $path = explode("/",$_GET["path"]);
 $endpoint = array_shift($path);
 
 $valid_endpoints = [
-	'note'
+	'note',
+	'session'
 ];
 
 $response = [
