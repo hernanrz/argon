@@ -2,6 +2,7 @@
 /*
 *	Watchdog
 *	Simple spam protection 
+*	TODO: Finish this
 */
 
 class Watchdog {
