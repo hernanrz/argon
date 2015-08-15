@@ -10,7 +10,7 @@
 		display: block;
 		margin: 5px auto;
 	}
-	
+
 	#title.view {
 		height: auto;
 	}
@@ -37,5 +37,8 @@
 @media screen and (min-device-width:1000px) {
 	#sidebar {
 		width: 225px;
+	}
+	body {
+		padding-left: 225px;
 	}
 }

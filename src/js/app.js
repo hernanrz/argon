@@ -30,11 +30,11 @@ var components = {
 	 * @param String the name of the property of the element to get/set, defaults to "value"
 	 */
 	link: function (element, prop, elemprop) {
-		
+
 		elemprop = elemprop || "value";
-		
+
 		Object.defineProperty(this, prop, {
-			
+
 			get: function () {
 				return element[elemprop];
 			},
@@ -42,7 +42,7 @@ var components = {
 				element[elemprop] = content;
 			}
 		});
-		
+
 		return this;
 	}
 };
@@ -51,14 +51,14 @@ function saveNote() {
 		var	params = {
 			'content': components.content,
 			'title'  : components.title,
-			'private': Number(components.private)				
+			'private': Number(components.private)
 		},
 		url = "api/v1/note/",
 		ajaxSettings = {
 			method: '',
 			dataType: 'json'
 		};
-	
+
 		//Check if there is an UID defined
 		if(components.UID == '') {
 			ajaxSettings.method = "POST";
@@ -69,30 +69,30 @@ function saveNote() {
 			//Need to add the key and UID to the url if we're gonna update the ntoe
 			url = url + params.UID + "/" + params.key;
 		}
-		
+
 		ajaxSettings.data = params;
-		
+
 		ajaxSettings.success = function (data) {
 			$("#save-btn").text("Guardar");
 			if(components.UID === '') {
-				$("#action-links").show();	
+				$("#action-links").show();
 			}
-			
+
 			/** Set the UID and Key the server returns */
 			components.UID = data.note.UID;
 			if(data.note.key) {
 				components.key = data.note.key;
-				
+
 				//Change current url since we just created a note
 				if(typeof history.pushState === "undefined") {
 					//Ugly way of doing things
 					location.href = "n/" + data.note.UID + "/" + data.note.key;
 				} else {
 					//Fancy way
-					history.pushState({}, "", "n/" + data.note.UID + "/" + data.note.key);	
+					history.pushState({}, "", "n/" + data.note.UID + "/" + data.note.key);
 				}
 			}
-			
+
 			/** Update the UI with the values from the server */
 			components.title = data.note.title;
 			components.content = data.note.content;
@@ -103,11 +103,13 @@ function saveNote() {
 		$.ajax(url, ajaxSettings);
 }
 
+
+
 $(document).ready(function(){
 	var title = $("#title").get(0),
 	textarea = $("#text-area").get(0),
 	private = $("#private-chk").get(0);
-	
+
 	/**
 	 * Link the elements on the page to the components object
 	 */
@@ -115,11 +117,11 @@ $(document).ready(function(){
 	.link(title, "title")
 	.link(textarea, "content")
 	.link(private, "private", "checked");
-	
+
 	$("#save-btn").on("click", function() {
 		saveNote();
 	});
-	
+
 	$("#delete-link").on("click", function() {
 		if(confirm("¿Estás segura(o) de eliminar la nota?")) {
 			var url = "api/v1/note/" + components.UID + "/" + components.key;
@@ -131,7 +133,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
+
 	$("#share-link").on("click", function() {
 		if($("#share-url").toggle().is(":visible")) {
 			var current_location = location.href, url;
@@ -139,14 +141,20 @@ $(document).ready(function(){
 			if(current_location.charAt(current_location.length - 1) === "/") {
 				current_location = current_location.substr(0, current_location.length - 1);
 			}
-			
+
 			url = current_location.substr(0, current_location.lastIndexOf("/"));
-			
+
 			$("#share-url-val").val(url).select();
 		}
 	});
-	
+
 	$("#share-url-val").on("click doubleclick mouseover", function() {
 		$("#share-url-val").focus().select();
 	});
+
+	$("#register-link, #cancel-register").on("click", function() {
+		$("#register-form, #login-form").toggleClass("hidden");
+	});
+
+
 });

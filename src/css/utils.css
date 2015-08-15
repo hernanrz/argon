@@ -12,3 +12,11 @@
 .f-right {
 	float: right;
 }
+
+.hidden {
+	display: none;
+}
+/* Clear"fix" */
+.clearfix {
+	clear: both;
+}
