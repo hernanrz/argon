@@ -6,8 +6,8 @@ if(!isset($note) && isset($_GET["UID"])) {
 if(isset($note) && isset($_GET["key"])) {
 	?>
 	<script>
-	components.UID = "<?php print $note->UID ?>";
-	components.key = "<?php print $_GET["key"] ?>";
+	Ar.components.UID = "<?php print $note->UID ?>";
+	Ar.components.key = "<?php print $_GET["key"] ?>";
 	</script>
 	<?php
 }

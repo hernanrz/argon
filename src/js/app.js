@@ -17,41 +17,43 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
 */
 
+var Ar = {
+	components: {
+		UID: '',
+		key: '',
+		title: '',
+		content: '',
+		private: '',
+		/**
+		 * @param Object element The element to link
+		 * @param String the name of the property to link it to
+		 * @param String the name of the property of the element to get/set, defaults to "value"
+		 */
+		link: function (element, prop, elemprop) {
 
-var components = {
-	UID: '',
-	key: '',
-	title: '',
-	content: '',
-	private: '',
-	/**
-	 * @param Object element The element to link
-	 * @param String the name of the property to link it to
-	 * @param String the name of the property of the element to get/set, defaults to "value"
-	 */
-	link: function (element, prop, elemprop) {
+			elemprop = elemprop || "value";
 
-		elemprop = elemprop || "value";
+			Object.defineProperty(this, prop, {
 
-		Object.defineProperty(this, prop, {
+				get: function () {
+					return element[elemprop];
+				},
+				set: function(content) {
+					element[elemprop] = content;
+				}
+			});
 
-			get: function () {
-				return element[elemprop];
-			},
-			set: function(content) {
-				element[elemprop] = content;
-			}
-		});
-
-		return this;
+			return this;
+		}
 	}
 };
 
+
 function saveNote() {
 		var	params = {
-			'content': components.content,
-			'title'  : components.title,
-			'private': Number(components.private)
+			'content': Ar.components.content,
+			'title'  : Ar.components.title,
+			'private': Number(Ar.components.private)
 		},
 		url = "api/v1/note/",
 		ajaxSettings = {
@@ -60,12 +62,12 @@ function saveNote() {
 		};
 
 		//Check if there is an UID defined
-		if(components.UID == '') {
+		if(Ar.components.UID == '') {
 			ajaxSettings.method = "POST";
 		}else {
 			ajaxSettings.method = "PUT";
-			params.UID = components.UID;
-			params.key = components.key;
+			params.UID = Ar.components.UID;
+			params.key = Ar.components.key;
 			//Need to add the key and UID to the url if we're gonna update the ntoe
 			url = url + params.UID + "/" + params.key;
 		}
@@ -73,15 +75,15 @@ function saveNote() {
 		ajaxSettings.data = params;
 
 		ajaxSettings.success = function (data) {
-			$("#save-btn").text("Guardar");
-			if(components.UID === '') {
+			$("#save-btn").text(Ar.loc["save"]);
+			if(Ar.components.UID === '') {
 				$("#action-links").show();
 			}
 
 			/** Set the UID and Key the server returns */
-			components.UID = data.note.UID;
+			Ar.components.UID = data.note.UID;
 			if(data.note.key) {
-				components.key = data.note.key;
+				Ar.components.key = data.note.key;
 
 				//Change current url since we just created a note
 				if(typeof history.pushState === "undefined") {
@@ -94,12 +96,12 @@ function saveNote() {
 			}
 
 			/** Update the UI with the values from the server */
-			components.title = data.note.title;
-			components.content = data.note.content;
-			components.private = data.note.private;
+			Ar.components.title = data.note.title;
+			Ar.components.content = data.note.content;
+			Ar.components.private = data.note.private;
 			document.title = data.note.title + " | Argón";
 		};
-		$("#save-btn").text("Guardando...");
+		$("#save-btn").text(Ar.loc["saving"] + "...");
 		$.ajax(url, ajaxSettings);
 }
 
@@ -113,7 +115,8 @@ $(document).ready(function(){
 	/**
 	 * Link the elements on the page to the components object
 	 */
-	components
+	Ar
+	.components
 	.link(title, "title")
 	.link(textarea, "content")
 	.link(private, "private", "checked");
@@ -123,8 +126,8 @@ $(document).ready(function(){
 	});
 
 	$("#delete-link").on("click", function() {
-		if(confirm("¿Estás segura(o) de eliminar la nota?")) {
-			var url = "api/v1/note/" + components.UID + "/" + components.key;
+		if(confirm(Ar.loc["delete_prompt"])) {
+			var url = "api/v1/note/" + Ar.components.UID + "/" + Ar.components.key;
 			$.ajax(url, {
 				method: 'DELETE',
 				success: function (){

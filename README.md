@@ -1,5 +1,5 @@
 # What is this? #
-Argon is a note sharing web application, it includes a RESTful API 
+Argon is a note sharing web application, it includes a RESTful API
 
 # Installation #
 1. Run `php scripts/install_db.php` this will create a database.php file in the settings folder and then will create the tables in your database.
@@ -19,4 +19,4 @@ To run argon you need the following:
 The RESTful API is not documented yet, although you can take a look at the source code to see how it works
 
 # License #
-	See LICENSE for licensing info
+See LICENSE for licensing info
