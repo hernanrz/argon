@@ -7,7 +7,7 @@
 * It determines what method is being requested and parses the parameters needed
 */
 
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=utf-8");
 header("Access-Control-Allow-Origin: *");
 
 require "../core.php";
@@ -74,7 +74,7 @@ if(in_array($endpoint, $valid_endpoints)) {
 	set_status(404, $STR["endpoint_404"]);
 }
 
-$json = json_encode($response, JSON_PRETTY_PRINT);
+$json = json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
 if(isset($_GET["callback"])){
 	$json = $_GET["callback"] . "({$json});";

@@ -15,9 +15,10 @@ switch($method) {
 		}else {
 			if(($auth_key_header = explode(":", $_SERVER["HTTP_X_AUTH_KEY"])) && count($auth_key_header) == 2) {
 
-				list($username, $auth_key) = $auth_key_header;
-				$user = new User($pdo_link, $auth_key);
+				list($username, $password) = $auth_key_header;
+				$user = new User($pdo_link);
 				$user->username = $username;
+				$user->password = $password;
 
 				if($user->auth()) {
 					$session->user = $user;
@@ -62,7 +63,7 @@ switch($method) {
 				];
 				$response["user_data"] = $user_data;
 			}else {
-				set_status(403, $STR["invalid_userkey_combo"];
+				set_status(403, $STR["invalid_userkey_combo"]);
 			}
 		}else {
 			set_status(403, $STR["missing_parameters"]);

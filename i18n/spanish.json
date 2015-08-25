@@ -41,6 +41,9 @@
     "couldnt_authorize": "No se pudo autorizar al usuario",
     "missing_parameters": "Parámetros faltantes",
     "invalid_userkey_combo": "Combinación de usuario\/token inválida",
-    "endpoint_404": "Punto final no encontrado"
+    "endpoint_404": "Punto final no encontrado",
+    "username_taken": "Ese nombre de usuario ya existe",
+    "register_failed": "No se pudo crear tu cuenta",
+    "account_created": "Cuenta creada"
   }
 }

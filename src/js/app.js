@@ -105,6 +105,11 @@ function saveNote() {
 		$.ajax(url, ajaxSettings);
 }
 
+function attemptLogin(username, password) {
+	$.ajax({
+		
+	});
+}
 
 
 $(document).ready(function(){
