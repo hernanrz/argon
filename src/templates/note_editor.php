@@ -12,8 +12,6 @@ if(isset($note) && isset($_GET["key"])) {
 	<?php
 }
 ?>
-<div id="sidebar">
-</div>
 <div class="page-block">
 	<input value="<?= (isset($note) ? $note->title : "") ?>" placeholder="Nueva Nota" type="text" id="title" class="input"/>
 	<div id="text-content">
