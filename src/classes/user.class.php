@@ -158,6 +158,20 @@ class User {
 		return false;
 	}
 	
+	public function fetch_user_notes() {
+		$this->query_handle->query = "SELECT UID, title, pkey FROM notes WHERE author_id = ?";
+		$param = [$this->user_id];
+		$this->query_handle->exec($param);
+		
+		$notes = [];
+		
+		while($row = $this->query_handle->fetch()) {
+			$notes[] = $row;
+		}
+		
+		return $notes;
+	}
+	
 	/**
 	*	Checks if the username is already in the database
 	*/

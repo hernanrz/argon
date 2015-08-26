@@ -41,8 +41,10 @@ switch($method) {
 			 $note->title = $data["title"];
 			 $note->content = $data["content"];
 			 $note->private = (bool)$data["private"];
-
-			 $key = $note->create();
+			 
+			 $author_id = $SESSION_STARTED ? $CURRENT_USER->user_id : -1;
+			 
+			 $key = $note->create($author_id);
 
 			 set_status(201, $STR["note_created"]);
 			 $response["note"] = get_note_data($note);

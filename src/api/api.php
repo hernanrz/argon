@@ -19,7 +19,8 @@ $endpoint = array_shift($path);
 
 $valid_endpoints = [
 	'note',
-	'session'
+	'session',
+	'user'
 ];
 
 $response = [

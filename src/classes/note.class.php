@@ -29,6 +29,12 @@ class Note {
 	*/
 	public $private;
 	
+	/*
+	*	The user id of the creator of the note
+	*	Default is -1 (Anonymous)
+	*/
+	public $author_id = -1;
+	
 	/* The pdo link to be used in the queries */
 	private $pdo;
 	
@@ -70,12 +76,14 @@ class Note {
 	* Creates an uid and a key for the note and stores it into the db
 	* Returns the note's private key.
 	*/
-	public function create() {
+	public function create($author_id = -1) {
 		$this->gen_uniq_id();
-		$pkey_hash = $this->gen_priv_key();
+		$pkey_hash = $this->gen_priv_key();		
 		
-		$params = $this->members_to_array("UID", "title", "content", "private", "pkey");
-		$query = "INSERT INTO notes (UID, title, content, private, pkey) VALUES (?, ?, ?, ?, ?)";
+		$this->author_id = $author_id;
+		
+		$params = $this->members_to_array("UID", "title", "content", "private", "pkey", "author_id");
+		$query = "INSERT INTO notes (UID, title, content, private, pkey, author_id) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		$handle = new Query($this->pdo, $query);
 		if(!($handle->exec($params))) {

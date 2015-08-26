@@ -226,3 +226,13 @@ a:hover {
 	top: -3px;
 	padding-left: 10px;
 }
+
+#sb_notes_container {
+	box-sizing: border-box;
+	padding: 15px 10px;
+}
+
+#note_list_header {
+	margin-left: -15px;
+	margin-bottom: 5px;
+}

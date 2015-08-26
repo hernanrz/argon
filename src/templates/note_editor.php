@@ -16,33 +16,45 @@ if(isset($note) && isset($_GET["key"])) {
 	<div id="logo" class="text-center">
 		<i class="icon argon"></i>
 	</div>
+	<div id="forms">
+		<div id="login-form">
+			<form action="javascript:void(0)" onsubmit="javascript:void(0)">
+				<p><?=$STR["have_account_prompt"]?></p>
+				<input id="login-username" type="text" placeholder="<?=$STR["username"]?>" />
+				<input id="login-password" type="password" placeholder="<?=$STR["password"]?>" />
+				<input type="checkbox" id="remember-box" checked="checked" /> <label for="remember-box"> <?=$STR["remember_me"]?></label>
 
-	<div id="login-form">
-		<p><?=$STR["have_account_prompt"]?></p>
-		<input type="text" placeholder="<?=$STR["username"]?>" />
-		<input type="password" placeholder="<?=$STR["password"]?>" />
-		<input type="checkbox" id="remember-box" checked="checked" /> <label for="remember-box"> <?=$STR["remember_me"]?></label>
+				<button type="submit" id="login-button" class="btn f-right"><?=$STR["login_button"]?></button>
+				<a class="f-left" id="register-link" href="javascript:void(0)"><?=$STR["register_link"]?></a>
+			</form>
+		</div>
 
-		<button class="btn f-right"><?=$STR["login_button"]?></button>
-		<a class="f-left" id="register-link" href="javascript:void(0)"><?=$STR["register_link"]?></a>
+		<div id="register-form" class="hidden">
+			<p><?=$STR["username"]?></p>
+			<input type="text" placeholder="<?=$STR["username"]?>" />
+			<p><?=$STR["password"]?></p>
+			<input type="password" placeholder="<?=$STR["password"]?>" />
+			<p><?=$STR["repeat_password"]?></p>
+			<input type="password" placeholder="<?=$STR["password"]?>" />
+
+			<button class="btn f-right"><?=$STR["register_button"]?></button>
+			<a id="cancel-register" href="javascript:void(0)" class="f-left">&#8678; <?=$STR["cancel"]?></a>
+		</div>
+		<br class="clearfix" />
+		<div class="status-box clearfix hidden">
+			<i class="icon warning"></i><span id="ajax-message"></span>
+		</div>
 	</div>
 
-	<div id="register-form" class="hidden">
-		<p><?=$STR["username"]?></p>
-		<input type="text" placeholder="<?=$STR["username"]?>" />
-		<p><?=$STR["password"]?></p>
-		<input type="password" placeholder="<?=$STR["password"]?>" />
-		<p><?=$STR["repeat_password"]?></p>
-		<input type="password" placeholder="<?=$STR["password"]?>" />
-
-		<button class="btn f-right"><?=$STR["register_button"]?></button>
-		<a id="cancel-register" href="javascript:void(0)" class="f-left">&#8678; <?=$STR["cancel"]?></a>
+	<div id="user_dashboard" class="hidden">
+		<p>Hey, <i id="sb_username">poopsmashher</i></p>
+		<div id="sb_notes_container">
+			<p id="note_list_header">Your notes: </p>
+			<ul>
+				<li>Things</li>
+			</ul>
+		</div>
 	</div>
-	<br class="clearfix" />
-	<div class="status-box clearfix hidden">
-		<i class="icon warning"></i><span></span>
-	</div>
-
 </div>
 
 <div class="page-block">

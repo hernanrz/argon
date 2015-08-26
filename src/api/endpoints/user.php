@@ -22,15 +22,23 @@ switch ($method) {
         set_status(403, $STR["register_failed"]);
         break;
       
-      case default:
+      default:
         set_status(201, $STR["account_created"]);
         break;
     }
     
     break;
-
+  
+  case 'GET':
+    $response["debug"] = $AR_SESSION_PAIR;
+    if(("notes" == array_shift($path)) && $SESSION_STARTED) {
+      $note_list = $CURRENT_USER->fetch_user_notes();
+      $response["notes"] = $note_list;
+    }
+    break;
+  
   default:
-    new User("s-h-i-t")
+    set_status(501, unsupported_method);
     break;
 }
 

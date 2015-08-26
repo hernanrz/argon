@@ -18,6 +18,8 @@
 */
 
 var Ar = {
+	user_session_token: false,
+	session_started: true,
 	components: {
 		UID: '',
 		key: '',
@@ -105,12 +107,65 @@ function saveNote() {
 		$.ajax(url, ajaxSettings);
 }
 
+/**
+*	Requests a new session token for the user
+*/
 function attemptLogin(username, password) {
-	$.ajax({
-		
+	Ar.components.auth_header = username + ":" + password;
+	Ar.current_username = username;
+	$.ajax("api/v1/session", {
+		type: "POST",
+		dataType: 'json',
+		beforeSend: function (request) {
+			request.setRequestHeader("X-Auth-Key", Ar.components.auth_header);
+			Ar.components.auth_header = null;
+		},
+		error: function(data) {
+				$(".status-box").removeClass("hidden");
+				$("#ajax-message").text(data.responseJSON.status);
+		},
+		success: function(data) {
+			var token_pair = Ar.current_username + ":" + data.session_token;
+			localStorage.setItem("user_session_token", token_pair);
+			Ar.user_session_token = token_pair;
+			initSession();
+		}
 	});
 }
 
+/**
+*	Displays user's dashboard, notes, and others
+*/
+function initSession() {
+	Ar.current_username = Ar.user_session_token.split(":")[0];
+	Ar.session_started = true;
+	
+	//Add session header to all requests from now on
+	$.ajaxSetup({
+		beforeSend: function (req) {
+			req.setRequestHeader("X-Session-Token", Ar.user_session_token);
+		}
+	});
+	
+	$("#forms, #user_dashboard").toggleClass("hidden");
+	
+	$("#sb_username").text(Ar.current_username);
+	
+	$.ajax("api/v1/user/notes", {
+		dataType: "json"
+	});
+}
+
+/**
+* Deletes all session data stored in the browser
+*/
+function flushSession() {
+	localStorage.removeItem("user_session_token");
+	Ar.current_username = undefined;
+	Ar.user_session_token = undefined;
+	Ar.session_started = false;
+	$("#forms, #user_dashboard").toggleClass("hidden");
+}
 
 $(document).ready(function(){
 	var title = $("#title").get(0),
@@ -125,6 +180,10 @@ $(document).ready(function(){
 	.link(title, "title")
 	.link(textarea, "content")
 	.link(private, "private", "checked");
+
+	if((Ar.user_session_token = localStorage.getItem("user_session_token")) && $("#sidebar").is(":visible")) {
+		initSession();
+	}
 
 	$("#save-btn").on("click", function() {
 		saveNote();
@@ -164,5 +223,8 @@ $(document).ready(function(){
 		$("#register-form, #login-form").toggleClass("hidden");
 	});
 
+	$("#login-button").on("click", function() {
+		attemptLogin($("#login-username").val(), $("#login-password").val());
+	})
 
 });
