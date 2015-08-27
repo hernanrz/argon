@@ -14,6 +14,8 @@ if(isset($note) && isset($_GET["key"])) {
 
 include "sidebar.php";
 ?>
+<div class="icon menu" id="sidebar-toggle">
+</div>
 <div class="page-block">
 	<input value="<?= (isset($note) ? $note->title : "") ?>" placeholder="<?=$STR["new_note"]?>" type="text" id="title" class="input"/>
 	<div id="text-content">

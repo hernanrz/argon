@@ -10,7 +10,7 @@ body {
 	background-size: cover;
 	background-attachment: fixed;
 	color: #333;
-	padding-left: 150px;
+	padding-left: 225px;
 	box-sizing: border-box;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14.5px;
@@ -22,7 +22,7 @@ body.view {
 
 .page-block {
 	min-width: 250px;
-	max-width: 60%;
+	max-width: 79.99%;
 	margin: 0 auto;
 
 }
@@ -161,7 +161,7 @@ a:hover {
 	top: 0;
 	left: 0;
 	height: 100%;
-	width: 150px;
+	width: 225px;
 	background: #ddd;
 	border-right: 1px solid #ccc;
 	color: #555;
@@ -288,4 +288,8 @@ hr {
 #sidebar input:invalid {
 	border-color: #f99;
 	box-shadow: none;
+}
+
+#sidebar-toggle {
+	display: none;
 }

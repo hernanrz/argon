@@ -320,4 +320,12 @@ $(document).ready(function(){
 		
 		attemptRegister(username, pass1);
 	});
+	
+	$("#sidebar-toggle").on("click", function() {
+			$("body").toggleClass("show-sidebar");	
+	});
+	
+	$("body").on("touch", function() {
+		$("body").toggleClass("show-sidebar");	
+	});
 });

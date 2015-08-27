@@ -31,4 +31,9 @@ if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
 }
 
 require AR_ROOT. "/../lang/{$AR_LANG}_locale.php";
+
+
+//used to encrypt/decrypt note's private keys
+define('AR_KEY', /* Some password here */);
+define('AR_IV', /* Some 16 bytes string here */);
 ?>
