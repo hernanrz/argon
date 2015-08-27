@@ -166,6 +166,7 @@ class User {
 		$notes = [];
 		
 		while($row = $this->query_handle->fetch()) {
+			$row["pkey"] = Note::decrypt_key($row["pkey"]);
 			$notes[] = $row;
 		}
 		

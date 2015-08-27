@@ -30,7 +30,6 @@ switch ($method) {
     break;
   
   case 'GET':
-    $response["debug"] = $AR_SESSION_PAIR;
     if(("notes" == array_shift($path)) && $SESSION_STARTED) {
       $note_list = $CURRENT_USER->fetch_user_notes();
       $response["notes"] = $note_list;

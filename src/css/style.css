@@ -233,6 +233,32 @@ a:hover {
 }
 
 #note_list_header {
-	margin-left: -15px;
-	margin-bottom: 5px;
+	margin: 10px 0 5px -15px;
+}
+
+.note_list_item {
+	list-style-type: none;
+	cursor: pointer;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	color: #0B72D6;
+	text-shadow: 0 1px 0 #fff;
+	box-shadow: inset 0 0 3px #fff;
+	box-sizing: border-box;
+	padding: 6px;
+	border-radius: 3px;
+}
+
+.note_list_item:hover {
+	box-shadow: inset 0 0 3px #fff, 0 0 1px rgba(0,0,0,0.2);
+}
+
+.note_list_item:active {
+	box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+}
+
+hr {
+	border: 1px dashed #555;
+	border-bottom: none;
+	opacity: .7;
 }

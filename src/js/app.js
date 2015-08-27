@@ -152,7 +152,13 @@ function initSession() {
 	$("#sb_username").text(Ar.current_username);
 	
 	$.ajax("api/v1/user/notes", {
-		dataType: "json"
+		dataType: "json",
+		success: function(response) {
+			$("#note_list").empty();
+			$.each(response.notes, function(k, note) {
+				$("<li class='note_list_item'>").attr("id", note.UID).data("key", note.pkey).text(note.title).appendTo("#note_list")
+			})
+		}
 	});
 }
 
@@ -166,6 +172,45 @@ function flushSession() {
 	Ar.session_started = false;
 	$("#forms, #user_dashboard").toggleClass("hidden");
 }
+
+function deleteNote(key) {
+	key = key || Ar.components.key;
+	if(confirm(Ar.loc["delete_prompt"])) {
+		var url = "api/v1/note/" + Ar.components.UID + "/" + key;
+		$.ajax(url, {
+			method: 'DELETE',
+			success: function (){
+				location.href = "";
+			}
+		});
+	}
+}
+
+function loadNote(UID, key) {
+	Ar.components.UID = UID;
+	Ar.components.key = key;
+
+	$.getJSON("api/v1/note/" + UID, function(response) {
+		Ar.components.title = response.note.title;
+		Ar.components.private = response.note.private;
+		Ar.components.content = response.note.content;
+		document.title = Ar.components.title + " | " + "Argón";
+		history.pushState({}, "", "n/"+ Ar.components.UID + "/" + Ar.components.key);
+		$("#action-links").show();
+	});
+}
+
+function clearPanel() {
+	Ar.components.title = "";
+	Ar.components.content = "";
+	Ar.components.private = true;
+	Ar.components.UID = undefined;
+	Ar.components.key = undefined;
+	document.title = "Argón";
+	history.pushState({}, "", $("#logo a").attr("href"));//Dirty, but it works
+	$("#action-links").hide();
+}
+
 
 $(document).ready(function(){
 	var title = $("#title").get(0),
@@ -190,15 +235,7 @@ $(document).ready(function(){
 	});
 
 	$("#delete-link").on("click", function() {
-		if(confirm(Ar.loc["delete_prompt"])) {
-			var url = "api/v1/note/" + Ar.components.UID + "/" + Ar.components.key;
-			$.ajax(url, {
-				method: 'DELETE',
-				success: function (){
-					location.href = "";
-				}
-			});
-		}
+		deleteNote();
 	});
 
 	$("#share-link").on("click", function() {
@@ -225,6 +262,16 @@ $(document).ready(function(){
 
 	$("#login-button").on("click", function() {
 		attemptLogin($("#login-username").val(), $("#login-password").val());
-	})
-
+	});
+	
+	$("#note_list").on("click", ".note_list_item", function() {
+		loadNote($(this).attr("id"), $(this).data("key"));
+		//window.location = "n/" + $(this).attr("id") + "/" + $(this).data("key");
+	});
+	
+	$(".status-box").on("click", function() {
+		$(this).fadeOut(function() {
+			$(this).addClass("hidden").removeAttr("style");
+		});
+	});
 });

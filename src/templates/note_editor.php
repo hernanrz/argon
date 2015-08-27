@@ -14,7 +14,7 @@ if(isset($note) && isset($_GET["key"])) {
 ?>
 <div id="sidebar">
 	<div id="logo" class="text-center">
-		<i class="icon argon"></i>
+		<a href="//<?= AR_PATH ?>"><i class="icon argon"></i></a>
 	</div>
 	<div id="forms">
 		<div id="login-form">
@@ -47,11 +47,12 @@ if(isset($note) && isset($_GET["key"])) {
 	</div>
 
 	<div id="user_dashboard" class="hidden">
-		<p>Hey, <i id="sb_username">poopsmashher</i></p>
+		<p>Hey, <i id="sb_username"></i>		<a class="f-right" href="javascript:flushSession()">Cerrar sesión</a></p>
 		<div id="sb_notes_container">
+			<div class="note_list_item text-center" onclick="clearPanel()">Nueva nota</div>
+			<hr />
 			<p id="note_list_header">Your notes: </p>
-			<ul>
-				<li>Things</li>
+			<ul id="note_list">
 			</ul>
 		</div>
 	</div>
@@ -64,7 +65,7 @@ if(isset($note) && isset($_GET["key"])) {
 	</div>
 	<div id="bottom-actions">
 		<input type="checkbox" id="private-chk" checked="<?php isset($note) ? ($note->private ? "checked" : "") : "" ?>" name="private"><label for="private-chk"> <?=$STR["private_note"]?></label>
-		<button class="flat-btn" id="save-btn"><?=$STR["save"]?></button>
+		<button class="btn" id="save-btn"><?=$STR["save"]?></button>
 	</div>
 	<div <?php if(isset($note)) { ?> style="display:block" <?php } ?> id="action-links">
 	<a id="delete-link" href="javascript:void(0)"><?=$STR["delete"]?></a>
