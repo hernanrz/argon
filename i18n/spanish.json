@@ -20,7 +20,11 @@
     "private_note": "Nota privada",
     "delete": "Eliminar",
     "share": "Compartir",
-    "delete_prompt": "¿Estás segura(o) de eliminar esta nota?"
+    "delete_prompt": "¿Estás segura(o) de eliminar esta nota?",
+    "password_mismatch": "Las contraseñas no coinciden",
+    "invalid_username": "Nombre de usuario inválido: solo se permiten letras, números, puntos o guiones",
+    "your_notes": "Tus notas",
+    "greet": "Hola"
   },
 
   "API_strings": {

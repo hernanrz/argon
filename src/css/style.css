@@ -257,8 +257,35 @@ a:hover {
 	box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
 }
 
+ul .note_list_item {
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 10px 6px;
+	margin: 0;
+}
+
+ul .note_list_item:hover {
+	box-shadow: none;
+	background: rgba(255,255,255,.243);
+}
+.note_list_item .icon {
+	position: relative;
+	top: 2px;
+}
+
 hr {
 	border: 1px dashed #555;
 	border-bottom: none;
-	opacity: .7;
+	opacity: .5;
+}
+
+#note_list {
+	width: 225px;
+	margin-left: -20px;
+}
+
+#sidebar input:invalid {
+	border-color: #f99;
+	box-shadow: none;
 }

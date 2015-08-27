@@ -3,36 +3,41 @@
 	height: 16px;
 	display: inline-block;
 	background-image:  url('../img/sprite.png') !important;
+	background-repeat: no-repeat;
 }
 
 .icon.spinner {
-	background: no-repeat -4px 0;
+	background-position: -4px 0;
 }
 
 .icon.link {
-	background: no-repeat -26px 0;
+	background-position: -26px 0;
 }
 
 .icon.warning {
-	background: no-repeat -49px 0;
+	background-position: -49px 0;
 }
 
 .icon.remove {
-	background: no-repeat -71px 0;
+	background-position: -71px 0;
 }
 
 .icon.bin {
-	background: no-repeat -95px 0;
+	background-position: -95px 0;
 }
 
 .icon.argon {
-	background: no-repeat 0 -31px;
+	background-position: 0 -31px;
 	width: 33px;
 	height: 23px;
 }
 
 .icon.user {
-	background: no-repeat -36px -24px;
+	background-position: -36px -24px;
 	width: 32px;
 	height: 32px;
+}
+
+.icon.document {
+	background-position: -74px -20px;
 }

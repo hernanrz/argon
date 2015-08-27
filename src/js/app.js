@@ -18,6 +18,7 @@
 */
 
 var Ar = {
+	storage: undefined,
 	user_session_token: false,
 	session_started: true,
 	components: {
@@ -26,6 +27,7 @@ var Ar = {
 		title: '',
 		content: '',
 		private: '',
+		perma_session: false,
 		/**
 		 * @param Object element The element to link
 		 * @param String the name of the property to link it to
@@ -95,6 +97,10 @@ function saveNote() {
 					//Fancy way
 					history.pushState({}, "", "n/" + data.note.UID + "/" + data.note.key);
 				}
+				
+				if(Ar.session_started) {
+						addNoteItem(data.note.UID, data.note.key, data.note.title);
+				}
 			}
 
 			/** Update the UI with the values from the server */
@@ -120,13 +126,9 @@ function attemptLogin(username, password) {
 			request.setRequestHeader("X-Auth-Key", Ar.components.auth_header);
 			Ar.components.auth_header = null;
 		},
-		error: function(data) {
-				$(".status-box").removeClass("hidden");
-				$("#ajax-message").text(data.responseJSON.status);
-		},
 		success: function(data) {
 			var token_pair = Ar.current_username + ":" + data.session_token;
-			localStorage.setItem("user_session_token", token_pair);
+			Ar.storage.setItem("user_session_token", token_pair);
 			Ar.user_session_token = token_pair;
 			initSession();
 		}
@@ -156,17 +158,25 @@ function initSession() {
 		success: function(response) {
 			$("#note_list").empty();
 			$.each(response.notes, function(k, note) {
-				$("<li class='note_list_item'>").attr("id", note.UID).data("key", note.pkey).text(note.title).appendTo("#note_list")
+				addNoteItem(note.UID, note.pkey, note.title);
 			})
 		}
 	});
+}
+
+function addNoteItem(UID, key, title) {
+	$("<li class='note_list_item'>")
+	.attr("id", UID).data("key", key)
+	.text(title)
+	.prepend($("<i class='icon document'>"))
+	.appendTo("#note_list");
 }
 
 /**
 * Deletes all session data stored in the browser
 */
 function flushSession() {
-	localStorage.removeItem("user_session_token");
+	Ar.storage.removeItem("user_session_token");
 	Ar.current_username = undefined;
 	Ar.user_session_token = undefined;
 	Ar.session_started = false;
@@ -180,10 +190,20 @@ function deleteNote(key) {
 		$.ajax(url, {
 			method: 'DELETE',
 			success: function (){
-				location.href = "";
+				$("#" + Ar.components.UID).remove();
+				clearPanel();
 			}
 		});
 	}
+}
+
+function attemptRegister(username, password) {
+	var params = {"username": username, "password": password};
+	$.post("api/v1/user", params, function(response) {
+		Ar.user_session_token = username + ":" + response.session_token;
+		Ar.storage.setItem("user_session_token", Ar.user_session_token);
+		initSession();
+	});
 }
 
 function loadNote(UID, key) {
@@ -204,19 +224,23 @@ function clearPanel() {
 	Ar.components.title = "";
 	Ar.components.content = "";
 	Ar.components.private = true;
-	Ar.components.UID = undefined;
-	Ar.components.key = undefined;
+	Ar.components.UID = '';
+	Ar.components.key = '';
 	document.title = "Argón";
 	history.pushState({}, "", $("#logo a").attr("href"));//Dirty, but it works
 	$("#action-links").hide();
 }
 
+function displayError(message) {
+	$("#ajax-message").text(message).parents(".status-box").removeClass("hidden");
+}
 
 $(document).ready(function(){
+	
 	var title = $("#title").get(0),
 	textarea = $("#text-area").get(0),
 	private = $("#private-chk").get(0);
-
+	
 	/**
 	 * Link the elements on the page to the components object
 	 */
@@ -224,12 +248,24 @@ $(document).ready(function(){
 	.components
 	.link(title, "title")
 	.link(textarea, "content")
-	.link(private, "private", "checked");
+	.link(private, "private", "checked")
+	.link($("#remember-box").get(0), "perma_session", "checked");
 
-	if((Ar.user_session_token = localStorage.getItem("user_session_token")) && $("#sidebar").is(":visible")) {
-		initSession();
+	
+	if('undefined' == typeof Ar.storage) {
+		Ar.storage = Ar.perma_session ? localStorage : sessionStorage
 	}
 
+	if((Ar.user_session_token = Ar.storage.getItem("user_session_token")) && $("#sidebar").is(":visible")) {
+		initSession();
+	}
+	
+	$.ajaxSetup({
+		error: function (data) {
+			displayError(data.responseJSON.status)
+		}
+	})
+	
 	$("#save-btn").on("click", function() {
 		saveNote();
 	});
@@ -273,5 +309,15 @@ $(document).ready(function(){
 		$(this).fadeOut(function() {
 			$(this).addClass("hidden").removeAttr("style");
 		});
+	});
+	
+	$("#actual-register-form").on("submit", function() {
+		var pass1 = $("#register_password").val(), pass2 = $("#register_password_check").val(), username = $("#register_username").val();
+		if(pass1  !== pass2) {
+			displayError(Ar.loc["password_mismatch"]);
+			return false;
+		}
+		
+		attemptRegister(username, pass1);
 	});
 });

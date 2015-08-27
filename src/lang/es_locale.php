@@ -18,6 +18,9 @@ $STR = array (
   'missing_parameters' => 'Parámetros faltantes',
   'invalid_userkey_combo' => 'Combinación de usuario/token inválida',
   'endpoint_404' => 'Punto final no encontrado',
+  'username_taken' => 'Ese nombre de usuario ya existe',
+  'register_failed' => 'No se pudo crear tu cuenta',
+  'account_created' => 'Cuenta creada',
   'have_account_prompt' => '¿Tienes una cuenta?',
   'remember_me' => 'Recordarme',
   'login_button' => 'Entrar',
@@ -34,5 +37,9 @@ $STR = array (
   'delete' => 'Eliminar',
   'share' => 'Compartir',
   'delete_prompt' => '¿Estás segura(o) de eliminar esta nota?',
+  'password_mismatch' => 'Las contraseñas no coinciden',
+  'invalid_username' => 'Nombre de usuario inválido: solo se permiten letras, números, puntos o guiones',
+  'your_notes' => 'Tus notas',
+  'greet' => 'Hola',
 );
 ?>
