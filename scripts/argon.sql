@@ -38,10 +38,11 @@ DROP TABLE IF EXISTS `notes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `notes` (
   `UID` varchar(40) NOT NULL DEFAULT '',
-  `title` varchar(141) DEFAULT NULL,
+  `title` varchar(141) CHARACTER SET utf8 DEFAULT NULL,
   `content` text,
   `private` int(1) DEFAULT NULL,
   `pkey` varchar(255) DEFAULT NULL,
+  `author_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -55,8 +56,7 @@ DROP TABLE IF EXISTS `user_notes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_notes` (
   `user_id` int(11) DEFAULT NULL,
-  `note_id` varchar(40) DEFAULT NULL,
-  `note_key` varchar(255) DEFAULT NULL
+  `note_id` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,7 +72,7 @@ CREATE TABLE `users` (
   `username` varchar(30) DEFAULT NULL,
   `auth_key` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -84,4 +84,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-16 18:54:28
+-- Dump completed on 2015-08-27 14:16:26

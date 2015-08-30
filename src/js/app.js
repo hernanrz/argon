@@ -128,6 +128,7 @@ function attemptLogin(username, password) {
 		},
 		success: function(data) {
 			var token_pair = Ar.current_username + ":" + data.session_token;
+			Ar.storage = Ar.components.perma_session ? localStorage : sessionStorage;
 			Ar.storage.setItem("user_session_token", token_pair);
 			Ar.user_session_token = token_pair;
 			initSession();
@@ -253,7 +254,7 @@ $(document).ready(function(){
 
 	
 	if('undefined' == typeof Ar.storage) {
-		Ar.storage = Ar.perma_session ? localStorage : sessionStorage
+		Ar.storage = Ar.components.perma_session || localStorage.getItem("user_session_token") ? localStorage : sessionStorage
 	}
 
 	if((Ar.user_session_token = Ar.storage.getItem("user_session_token")) && $("#sidebar").is(":visible")) {
