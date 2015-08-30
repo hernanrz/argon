@@ -1,0 +1,22 @@
+/**
+*	Useful css classes
+*/
+.text-center {
+	text-align: center;
+}
+
+.f-left {
+	float: left;
+}
+
+.f-right {
+	float: right;
+}
+
+.hidden {
+	display: none;
+}
+/* Clear"fix" */
+.clearfix {
+	clear: both;
+}

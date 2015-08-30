@@ -23,7 +23,7 @@ $key = array_shift($path);
 
 
 if(!$note->UID) {
-	set_status(403, "Missing UID parameter");
+	set_status(403, $STR["missing_uid"]);
 }
 
 
@@ -31,48 +31,50 @@ if(!$note->UID) {
 switch($method) {
 	//Create a new note
 	case "POST":
-	
+
 		 if(!expect_parameters("title", "content", "private")) {
-			 
-			 set_status(403, "Missing a required parameter");
-			 
+
+			 set_status(403, $STR["missing_required_param"]);
+
 		 }else {
-			 
+
 			 $note->title = $data["title"];
 			 $note->content = $data["content"];
 			 $note->private = (bool)$data["private"];
 			 
-			 $key = $note->create();
+			 $author_id = $SESSION_STARTED ? $CURRENT_USER->user_id : -1;
 			 
-			 set_status(201, "Note created");
+			 $key = $note->create($author_id);
+
+			 set_status(201, $STR["note_created"]);
 			 $response["note"] = get_note_data($note);
 			 $response["note"]["key"] = $key;
-			 
+
 		 }
-		 
+
 	break;
 	//Fetch a note
 	case "GET":
-	
+
 		if($note->fetch_data()) {
-			
+
 			$response["note"] = get_note_data($note);
-			
+
 		}else {
-			
-			set_status(404, "Note not found");	
-			
+
+			set_status(404, $STR["note_404"]);
+
 		}
-		
+
 	break;
 	//Delete note from database
 	case "DELETE":
 		if (($result = $note->delete($key)) === Note::E_INVALID_PKEY) {
-			set_status(403, "Invalid key");
+			set_status(403, $STR["invalid_key"]);
 		}elseif(!$result){
-			set_status(500, "Could not delete note");	
+			set_status(500, $STR["note_not_deleted"]);
 		}else{
-			set_status(200, "Note deleted");
+			set_status(200, $STR["note_deleted"]);
 		}
 	break;
 	//Modify note data
@@ -84,31 +86,30 @@ switch($method) {
 			'title',
 			'content',
 			'private'
-		]; 
-		
+		];
+
 		foreach($data as $param=>$val){
 			if(property_exists($note, $param) && in_array($param, $allowed_params)){
 				$note->$param = $val;
-			}	
+			}
 		}
-		
+
 		$result = $note->save_changes($key);
-		
+
 		if($result === Note::E_INVALID_PKEY) {
-			set_status(403, "Invalid key");
-		} elseif (!$result){ 
-			set_status(500, "An error occurred");
-		} else {					
+			set_status(403, $STR["invalid_key"]);
+		} elseif (!$result){
+			set_status(500, $STR["error_occurred"]);
+		} else {
 			$response["note"] = get_note_data($note);
-	 		set_status(200, "Changes saved");	
+	 		set_status(200, $STR["changes_saved"]);
 		}
 
 	break;
-	
+
 	default:
-		set_status(501, "Method not supported");
+		set_status(501, $STR["unsupported_method"]);
 	break;
 }
-
 
 ?>

@@ -3,13 +3,14 @@
 * Argon REST API v1 Alpha
 * This is not the final version of the API and there will be many more changes in the following updates
 * Right now im not sure about the whole workflow of the script so it is likely to be updated as soon as i figure a better way
-* that allows quick development of new api endpoints 
+* that allows quick development of new api endpoints
 * It determines what method is being requested and parses the parameters needed
 */
 
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=utf-8");
 header("Access-Control-Allow-Origin: *");
-include "../core.php";
+
+require "../core.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 $path = explode("/",$_GET["path"]);
@@ -17,7 +18,9 @@ $path = explode("/",$_GET["path"]);
 $endpoint = array_shift($path);
 
 $valid_endpoints = [
-	'note'
+	'note',
+	'session',
+	'user'
 ];
 
 $response = [
@@ -51,7 +54,7 @@ function expect_parameters(...$params) {
 }
 
 switch($method) {
-	
+
 	case "POST":
 		$data = $_POST;
 	break;
@@ -60,19 +63,19 @@ switch($method) {
 		$data = [];
 		parse_str(file_get_contents("php://input"), $data);
 	break;
-	
+
 	default:
-		$data = NULL;	
+		$data = NULL;
 	break;
 }
 
 if(in_array($endpoint, $valid_endpoints)) {
 	include "endpoints/" . $endpoint . ".php";
 }else {
-	set_status(404, "Endpoint not found");
+	set_status(404, $STR["endpoint_404"]);
 }
 
-$json = json_encode($response, JSON_PRETTY_PRINT);
+$json = json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
 if(isset($_GET["callback"])){
 	$json = $_GET["callback"] . "({$json});";

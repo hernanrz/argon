@@ -14,11 +14,11 @@ class User {
 	/*
 	* sha1 hash of username:password
 	*/
-	public $auth_key;
+	public $auth_key = false;
 	
 	private $pdo;
 	private $query_handle;
-	private $authenticated = false;
+	public $authenticated = false;
 	
 	const E_USERNAME_EXISTS = 0x420;
 	
@@ -69,7 +69,10 @@ class User {
 	*	Returns true if it finds a result, false if it does not
 	*/
 	public function auth() {
-		$this->gen_auth_key();
+		
+		if(!$this->auth_key) {
+			$this->gen_auth_key();			
+		}
 		
 		$query = "SELECT * FROM users WHERE username = ? AND auth_key = ?";
 		$params = [
@@ -131,6 +134,43 @@ class User {
 			return true;
 		}
 		return false;		
+	}
+	
+	/**
+	* Fetches user's data using the user id
+	*/
+	public function fetch_with_id($user_id = false) {
+		if($user_id === false) {
+			$user_id = $this->user_id;
+		}
+		
+		$this->query_handle->query = "SELECT * FROM users WHERE ID = ?";
+		$this->query_handle->exec([$user_id]);
+	
+		
+		if ($result = $this->query_handle->fetch()) {
+			$this->username = $result["username"];
+			$this->auth_key = $result["auth_key"];
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function fetch_user_notes() {
+		$this->query_handle->query = "SELECT UID, title, pkey FROM notes WHERE author_id = ?";
+		$param = [$this->user_id];
+		$this->query_handle->exec($param);
+		
+		$notes = [];
+		
+		while($row = $this->query_handle->fetch()) {
+			$row["pkey"] = Note::decrypt_key($row["pkey"]);
+			$notes[] = $row;
+		}
+		
+		return $notes;
 	}
 	
 	/**

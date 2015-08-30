@@ -3,10 +3,10 @@ include "../src/core.php";
 
 $note = new Note($pdo_link);
 
-$key = "2dc454bf6bf9e7876b0cd35d366d1cd9";
-$note->UID = "c6eb5fe44158704397ef5b78b6a7618526ebd4efa";
-$data = $note->fetch_data();
-
-
-var_dump($note, $key, $data);
+$note->UID = "a2ce7541d0ff5ac7939d4b93ebe054b617a25e07";
+$note->fetch_data();
+$note->title = "lalalalala lalaalalalalala";
+$result= $note->save_changes("1704c1b299a04897a349115f8481970e");
+//$note->fetch_data();
+var_dump($note, $note->get_pkey());
 ?>

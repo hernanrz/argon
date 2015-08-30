@@ -3,22 +3,33 @@
 	body {
 		padding-left: 0;
 	}
-
+	
+	body.show-sidebar {
+		padding-left: 225px;
+		overflow-x: hidden;
+	}
+	
+	body.show-sidebar #sidebar {
+		left: 0;
+	}
+	
 	#title {
 		height: 32px;
 		width: 90%;
 		display: block;
 		margin: 5px auto;
 	}
-	
+
 	#title.view {
 		height: auto;
 	}
 
 	#sidebar {
-		left: -150px;
+		left: -225px;
 	}
-
+	
+	
+/*
 	#sidebar::before {
 		content:"";
 		display: block;
@@ -30,6 +41,22 @@
 		right: -162px;
 		top: 15px;
 		opacity: 0.4;
-	}
+	}*/
 
+	#sidebar-toggle {
+		position: absolute;
+		top: 10px;
+		left: 6px;
+		display: block;
+		opacity: .5;
+	}
 }
+/*
+@media screen and (min-device-width:1000px) {
+	#sidebar {
+		width: 225px;
+	}
+	body {
+		padding-left: 225px;
+	}
+}*/

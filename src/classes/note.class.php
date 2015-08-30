@@ -29,6 +29,12 @@ class Note {
 	*/
 	public $private;
 	
+	/*
+	*	The user id of the creator of the note
+	*	Default is -1 (Anonymous)
+	*/
+	public $author_id = -1;
+	
 	/* The pdo link to be used in the queries */
 	private $pdo;
 	
@@ -70,12 +76,14 @@ class Note {
 	* Creates an uid and a key for the note and stores it into the db
 	* Returns the note's private key.
 	*/
-	public function create() {
+	public function create($author_id = -1) {
 		$this->gen_uniq_id();
-		$pkey_hash = $this->gen_priv_key();
+		$pkey_hash = $this->gen_priv_key();		
 		
-		$params = $this->members_to_array("UID", "title", "content", "private", "pkey");
-		$query = "INSERT INTO notes (UID, title, content, private, pkey) VALUES (?, ?, ?, ?, ?)";
+		$this->author_id = $author_id;
+		
+		$params = $this->members_to_array("UID", "title", "content", "private", "pkey", "author_id");
+		$query = "INSERT INTO notes (UID, title, content, private, pkey, author_id) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		$handle = new Query($this->pdo, $query);
 		if(!($handle->exec($params))) {
@@ -91,10 +99,13 @@ class Note {
 	*/
 	public function save_changes($key) {	
 		
-		if(password_verify($key, $this->pkey)) {
+		if($this->valid_key($key)) {
 			
 			$query = "UPDATE notes SET title = ?, content = ?, private = ? WHERE UID = ? AND pkey = ?";
 			$handle = new Query($this->pdo, $query);
+			
+			$this->pkey = $this->encrypt_key($this->pkey);
+			
 			$params = $this->members_to_array("title", "content", "private", "UID", "pkey");
 			
 			$handle->exec($params);
@@ -115,8 +126,8 @@ class Note {
 		if(!isset($this->pkey)) {
 			$this->fetch_data();
 		}
-		
-		if(password_verify($key, $this->pkey)) {
+
+		if($this->valid_key($key)){
 			$query = "DELETE FROM notes WHERE UID = ?";
 			$handle = new Query($this->pdo, $query);
 			$params = $this->members_to_array("UID");//I'm lazy
@@ -127,6 +138,14 @@ class Note {
 		}
 		
 		return self::E_INVALID_PKEY;
+	}
+
+	public static function decrypt_key($key) {
+		return openssl_decrypt($key, 'AES-128-CBC', AR_KEY, 0, AR_IV);
+	}
+	
+	private function encrypt_key($key) {
+		return  openssl_encrypt($key, 'AES-128-CBC', AR_KEY, 0, AR_IV);
 	}
 	
 	/*
@@ -147,11 +166,17 @@ class Note {
 		$bytes = openssl_random_pseudo_bytes(16);
 		$key = bin2hex($bytes);
 		
-		$hash = password_hash($key, PASSWORD_DEFAULT);
-		
+		$hash = $this->encrypt_key($key);
 		$this->pkey = $hash;
 		
 		return $key;
+	}
+	
+	/**
+	*	Checks if given key is valid
+	*/
+	private function valid_key ($key) {
+		return $key === $this->pkey;
 	}
 	
 	/*
@@ -160,6 +185,9 @@ class Note {
 	private function _copy($array) {
 		foreach($array as $key=>$val) {
 			if(property_exists($this, $key)) {
+				if($key == "pkey") {
+					$val = $this->decrypt_key($val);
+				}
 				$this->$key = $val;
 			}
 		}
